@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fev.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.fev.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name_hello" jdbcType="VARCHAR" property="nameHello" />
+    <result column="age_user" jdbcType="INTEGER" property="ageUser" />
+    <result column="addressTc" jdbcType="VARCHAR" property="addresstc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name_hello, age_user, addressTc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fev.User">
+    insert into user (id, name_hello, age_user, 
+      addressTc)
+    values (#{id,jdbcType=INTEGER}, #{nameHello,jdbcType=VARCHAR}, #{ageUser,jdbcType=INTEGER}, 
+      #{addresstc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fev.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nameHello != null">
+        name_hello,
+      </if>
+      <if test="ageUser != null">
+        age_user,
+      </if>
+      <if test="addresstc != null">
+        addressTc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nameHello != null">
+        #{nameHello,jdbcType=VARCHAR},
+      </if>
+      <if test="ageUser != null">
+        #{ageUser,jdbcType=INTEGER},
+      </if>
+      <if test="addresstc != null">
+        #{addresstc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fev.User">
+    update user
+    <set>
+      <if test="nameHello != null">
+        name_hello = #{nameHello,jdbcType=VARCHAR},
+      </if>
+      <if test="ageUser != null">
+        age_user = #{ageUser,jdbcType=INTEGER},
+      </if>
+      <if test="addresstc != null">
+        addressTc = #{addresstc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fev.User">
+    update user
+    set name_hello = #{nameHello,jdbcType=VARCHAR},
+      age_user = #{ageUser,jdbcType=INTEGER},
+      addressTc = #{addresstc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
